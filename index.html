@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lakshitha Vidusara Perera | Web & Mobile Developer & ICT Technician</title>
+    <title>Lakshitha Vidusara | Student & ICT Technician</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -128,6 +128,44 @@
         .text-glow {
             text-shadow: 0 0 12px rgba(255, 201, 71, 0.3);
         }
+
+        .mobile-navigation {
+            width: min(28rem, calc(100% - 2rem));
+            max-height: calc(100% - 2rem);
+            margin: auto;
+            padding: 1.5rem;
+            overflow-y: auto;
+            color: #fff2e0;
+            background: rgba(30, 21, 48, 0.96);
+            border: 1px solid rgba(255, 242, 220, 0.14);
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .mobile-navigation::backdrop {
+            background: rgba(17, 11, 29, 0.78);
+            backdrop-filter: blur(4px);
+        }
+
+        .mobile-navigation a {
+            display: block;
+            padding: 0.875rem 1rem;
+            border-radius: 0.75rem;
+            color: #c4b5a3;
+            transition: color 0.2s, background-color 0.2s;
+        }
+
+        .mobile-navigation a:hover,
+        .mobile-navigation a:focus-visible {
+            color: #ffc947;
+            background: rgba(255, 242, 224, 0.06);
+        }
+
+        @media (min-width: 768px) {
+            .mobile-navigation {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body class="bg-ink-base text-cream font-body antialiased selection:bg-gold selection:text-ink-base overflow-x-hidden">
@@ -150,7 +188,7 @@
             </a>
 
             <!-- Nav Links -->
-            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-cream-muted">
+            <div class="hidden md:flex flex-1 items-center justify-center gap-8 text-sm font-medium text-cream-muted">
                 <a href="#about" onclick="sfx.play('hover')" class="hover:text-gold transition-colors">About</a>
                 <a href="#projects" onclick="sfx.play('hover')" class="hover:text-gold transition-colors">Projects</a>
                 <a href="#skills" onclick="sfx.play('hover')" class="hover:text-gold transition-colors">Skills</a>
@@ -158,25 +196,58 @@
                 <a href="#contact" onclick="sfx.play('hover')" class="hover:text-gold transition-colors">Contact</a>
             </div>
 
-            <!-- Utility Controls (Mode Switch & Audio) -->
-            <div class="flex items-center gap-3">
-                <!-- Sound Toggle Button -->
-                <button id="sound-toggle" onclick="toggleAudio()" class="w-9 h-9 rounded-full bg-ink-light border border-ink-border flex items-center justify-center text-cream-muted hover:text-gold hover:border-gold transition-all" title="Toggle Sound FX">
-                    <i id="sound-icon" class="fa-solid fa-volume-high text-xs"></i>
+            <!-- Accessibility Controls -->
+            <div id="accessibility-menu-container" class="relative ml-auto">
+                <button id="accessibility-menu-button" type="button" onclick="toggleAccessibilityMenu()" aria-expanded="false" aria-controls="accessibility-menu" class="flex items-center gap-2 px-4 py-2 rounded-full bg-ink-light border border-ink-border text-sm font-semibold text-cream-muted hover:text-gold hover:border-gold transition-all">
+                    <i class="fa-solid fa-universal-access" aria-hidden="true"></i>
+                    <span class="sr-only sm:not-sr-only">Accessibility</span>
+                    <i class="fa-solid fa-chevron-down text-xs hidden sm:inline-block" aria-hidden="true"></i>
                 </button>
 
-                <!-- View Switcher Toggle -->
-                <div class="bg-ink-light p-1 rounded-full border border-ink-border flex items-center text-xs">
-                    <button id="mode-3d-btn" onclick="switchView('3d')" class="px-3 py-1.5 rounded-full font-semibold transition-all bg-gold text-ink-base shadow-sm">
-                        <i class="fa-solid fa-cube mr-1"></i> 3D World
-                    </button>
-                    <button id="mode-2d-btn" onclick="switchView('2d')" class="px-3 py-1.5 rounded-full font-semibold transition-all text-cream-muted hover:text-cream">
-                        <i class="fa-solid fa-bolt mr-1"></i> Quick 2D
-                    </button>
+                <div id="accessibility-menu" class="hidden absolute right-0 top-full mt-3 w-64 rounded-2xl border border-ink-border bg-ink-light p-3 shadow-glass" aria-label="Accessibility settings">
+                    <div class="mb-3">
+                        <p class="px-3 pb-2 text-xs font-semibold uppercase tracking-wider text-cream-muted">Audio</p>
+                        <button id="sound-toggle" type="button" onclick="toggleAudio()" aria-pressed="true" class="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-left text-sm text-cream-muted hover:bg-ink-card hover:text-gold transition-all" title="Toggle Sound FX">
+                            <i id="sound-icon" class="fa-solid fa-volume-high text-xs" aria-hidden="true"></i>
+                            <span>Sound effects</span>
+                        </button>
+                    </div>
+
+                    <div>
+                        <p class="px-3 pb-2 text-xs font-semibold uppercase tracking-wider text-cream-muted">Display mode</p>
+                        <div class="space-y-1">
+                            <button id="mode-3d-btn" type="button" onclick="switchView('3d')" aria-pressed="true" class="w-full text-left px-3 py-2 rounded-lg font-semibold transition-all bg-gold text-ink-base shadow-sm">
+                                <i class="fa-solid fa-cube mr-2" aria-hidden="true"></i>3D World
+                            </button>
+                            <button id="mode-2d-btn" type="button" onclick="switchView('2d')" aria-pressed="false" class="w-full text-left px-3 py-2 rounded-lg font-semibold transition-all text-cream-muted hover:bg-ink-card hover:text-cream">
+                                <i class="fa-solid fa-bolt mr-2" aria-hidden="true"></i>Quick 2D
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <button id="mobile-menu-button" type="button" onclick="toggleMobileNavigation()" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-navigation" class="ml-3 flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-cream-muted hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold md:hidden">
+                <i class="fa-solid fa-bars text-lg" aria-hidden="true"></i>
+            </button>
         </nav>
     </header>
+
+    <dialog id="mobile-navigation" class="mobile-navigation" aria-labelledby="mobile-navigation-title">
+        <div class="flex items-center justify-between">
+            <h2 id="mobile-navigation-title" class="font-display text-lg font-bold text-cream">Navigation</h2>
+            <button id="mobile-menu-close-button" type="button" onclick="closeMobileNavigation()" aria-label="Close navigation menu" class="flex h-10 w-10 items-center justify-center rounded-full text-cream-muted hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold">
+                <i class="fa-solid fa-xmark text-lg" aria-hidden="true"></i>
+            </button>
+        </div>
+        <nav aria-label="Mobile navigation" class="mt-4 flex flex-col gap-1">
+            <a href="#about" onclick="sfx.play('hover'); closeMobileNavigation()">About</a>
+            <a href="#projects" onclick="sfx.play('hover'); closeMobileNavigation()">Projects</a>
+            <a href="#skills" onclick="sfx.play('hover'); closeMobileNavigation()">Skills</a>
+            <a href="#experience" onclick="sfx.play('hover'); closeMobileNavigation()">Credentials</a>
+            <a href="#contact" onclick="sfx.play('hover'); closeMobileNavigation()">Contact</a>
+        </nav>
+    </dialog>
 
     <!-- Main Content Wrapper -->
     <main class="relative z-10 w-full">
@@ -713,9 +784,87 @@
 
         const sfx = new SoundEngine();
 
+        function toggleMobileNavigation() {
+            const button = document.getElementById('mobile-menu-button');
+            const dialog = document.getElementById('mobile-navigation');
+
+            if (dialog.open) {
+                dialog.close();
+                return;
+            }
+
+            dialog.showModal();
+            button.setAttribute('aria-expanded', 'true');
+            document.getElementById('mobile-menu-close-button').focus();
+        }
+
+        function closeMobileNavigation() {
+            const dialog = document.getElementById('mobile-navigation');
+            if (dialog.open) dialog.close();
+        }
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) closeMobileNavigation();
+        });
+
+        document.getElementById('mobile-navigation').addEventListener('close', () => {
+            const button = document.getElementById('mobile-menu-button');
+            button.setAttribute('aria-expanded', 'false');
+            if (window.innerWidth < 768) button.focus();
+        });
+
+        document.getElementById('mobile-navigation').addEventListener('click', (event) => {
+            const dialog = event.currentTarget;
+            const bounds = dialog.getBoundingClientRect();
+            if (
+                event.target === dialog &&
+                (event.clientX < bounds.left || event.clientX > bounds.right ||
+                 event.clientY < bounds.top || event.clientY > bounds.bottom)
+            ) {
+                dialog.close();
+            }
+        });
+
+        function toggleAccessibilityMenu() {
+            const button = document.getElementById('accessibility-menu-button');
+            const menu = document.getElementById('accessibility-menu');
+            const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+            button.setAttribute('aria-expanded', String(!isExpanded));
+            menu.classList.toggle('hidden', isExpanded);
+        }
+
+        function closeAccessibilityMenu(returnFocus = false) {
+            const button = document.getElementById('accessibility-menu-button');
+            const menu = document.getElementById('accessibility-menu');
+
+            button.setAttribute('aria-expanded', 'false');
+            menu.classList.add('hidden');
+            if (returnFocus) button.focus();
+        }
+
+        document.addEventListener('click', (event) => {
+            const container = document.getElementById('accessibility-menu-container');
+            if (!container.contains(event.target)) closeAccessibilityMenu();
+        });
+
+        document.addEventListener('keydown', (event) => {
+            const button = document.getElementById('accessibility-menu-button');
+            if (event.key === 'Escape' && button.getAttribute('aria-expanded') === 'true') {
+                closeAccessibilityMenu(true);
+            }
+
+            const mobileDialog = document.getElementById('mobile-navigation');
+            if (event.key === 'Escape' && mobileDialog.open) {
+                event.preventDefault();
+                mobileDialog.close();
+            }
+        });
+
         function toggleAudio() {
             sfx.enabled = !sfx.enabled;
             const icon = document.getElementById('sound-icon');
+            document.getElementById('sound-toggle').setAttribute('aria-pressed', String(sfx.enabled));
             if (sfx.enabled) {
                 icon.className = 'fa-solid fa-volume-high text-xs text-gold';
                 sfx.play('click');
@@ -880,16 +1029,18 @@
             const canvasContainer = document.getElementById('canvas-container');
 
             if (mode === '3d') {
-                btn3d.className = "px-3 py-1.5 rounded-full font-semibold transition-all bg-gold text-ink-base shadow-sm";
-                btn2d.className = "px-3 py-1.5 rounded-full font-semibold transition-all text-cream-muted hover:text-cream";
+                btn3d.className = "w-full text-left px-3 py-2 rounded-lg font-semibold transition-all bg-gold text-ink-base shadow-sm";
+                btn2d.className = "w-full text-left px-3 py-2 rounded-lg font-semibold transition-all text-cream-muted hover:bg-ink-card hover:text-cream";
                 hint3d.style.display = "flex";
                 canvasContainer.style.opacity = "1";
             } else {
-                btn2d.className = "px-3 py-1.5 rounded-full font-semibold transition-all bg-gold text-ink-base shadow-sm";
-                btn3d.className = "px-3 py-1.5 rounded-full font-semibold transition-all text-cream-muted hover:text-cream";
+                btn2d.className = "w-full text-left px-3 py-2 rounded-lg font-semibold transition-all bg-gold text-ink-base shadow-sm";
+                btn3d.className = "w-full text-left px-3 py-2 rounded-lg font-semibold transition-all text-cream-muted hover:bg-ink-card hover:text-cream";
                 hint3d.style.display = "none";
                 canvasContainer.style.opacity = "0.15";
             }
+            btn3d.setAttribute('aria-pressed', String(mode === '3d'));
+            btn2d.setAttribute('aria-pressed', String(mode === '2d'));
         }
 
 
